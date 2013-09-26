@@ -186,9 +186,12 @@ public class FlagsDamage extends JavaPlugin {
 		
 		@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 		private void onPotionSplash(PotionSplashEvent e){
+			Flag flag = Flags.instance.getRegistrar().getFlag("PotionSplash");
+			if(flag == null) { return; }
+			
 			for (LivingEntity entity : e.getAffectedEntities()) {
 				if (!(entity instanceof Player)) { continue; }
-				if ( Director.getAreaAt(e.getEntity().getLocation()).getValue(Flags.instance.getRegistrar().getFlag("PotionSplash"), false)) {
+				if (Director.getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
 					// Essentially cancels it.
 					// Only way to cancel on a player by player basis instead of the whole effect.
 					e.setIntensity(entity, 0);
