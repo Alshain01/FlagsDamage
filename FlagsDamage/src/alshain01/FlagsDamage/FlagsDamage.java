@@ -71,7 +71,7 @@ public class FlagsDamage extends JavaPlugin {
 		ModuleYML dataFile = new ModuleYML(this, "flags.yml");
 		
 		// Register with Flags
-		Registrar flags = Flags.instance.getRegistrar();
+		Registrar flags = Flags.getRegistrar();
 		for(String f : dataFile.getModuleData().getConfigurationSection("Flag").getKeys(false)) {
 			ConfigurationSection data = dataFile.getModuleData().getConfigurationSection("Flag." + f);
 			
@@ -79,7 +79,7 @@ public class FlagsDamage extends JavaPlugin {
 			// It would just muck up the help menu.
 			// Null value is assumed to support all versions.
 			String api = data.getString("MinimumAPI");  
-			if(api != null && !Flags.instance.checkAPI(api)) { continue; }
+			if(api != null && !Flags.checkAPI(api)) { continue; }
 			
 			// The description that appears when using help commands.
 			String desc = data.getString("Description");
@@ -109,7 +109,7 @@ public class FlagsDamage extends JavaPlugin {
 			}
 			
 			Flag flag = null;
-			Registrar flags = Flags.instance.getRegistrar();
+			Registrar flags = Flags.getRegistrar();
 			
 			if (e.getCause() == DamageCause.BLOCK_EXPLOSION) {
 				flag = flags.getFlag("DamageBlockExplode");
@@ -141,13 +141,13 @@ public class FlagsDamage extends JavaPlugin {
 				flag = flags.getFlag("DamageSuicide");
 			} else if (e.getCause() == DamageCause.VOID) {
 				flag = flags.getFlag("DamageVoid");
-			} else if (Flags.instance.checkAPI("1.4.5")
+			} else if (Flags.checkAPI("1.4.5")
 					&& e.getCause() == DamageCause.FALLING_BLOCK) {
 				flag = flags.getFlag("DamageBlockFall");
-			} else if(Flags.instance.checkAPI("1.4.5")
+			} else if(Flags.checkAPI("1.4.5")
 					&& e.getCause() == DamageCause.WITHER) {
 				flag = flags.getFlag("DamageWither");
-			} else if(Flags.instance.checkAPI("1.5.2")
+			} else if(Flags.checkAPI("1.5.2")
 					&& e.getCause() == DamageCause.THORNS) {
 				flag = flags.getFlag("DamageThorns");
 			} else {
@@ -165,7 +165,7 @@ public class FlagsDamage extends JavaPlugin {
 			if (!(e.getEntity() instanceof Player)){ return; }
 			
 			Flag flag = null;
-			Registrar flags = Flags.instance.getRegistrar();
+			Registrar flags = Flags.getRegistrar();
 			
 			Entity damager = e.getDamager();
 			if (damager instanceof Monster
@@ -194,7 +194,7 @@ public class FlagsDamage extends JavaPlugin {
 		
 		@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 		private void onPotionSplash(PotionSplashEvent e){
-			Flag flag = Flags.instance.getRegistrar().getFlag("PotionSplash");
+			Flag flag = Flags.getRegistrar().getFlag("PotionSplash");
 			if(flag == null) { return; }
 			
 			for (LivingEntity entity : e.getAffectedEntities()) {
