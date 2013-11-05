@@ -80,34 +80,49 @@ public class FlagsDamage extends JavaPlugin {
 			switch (e.getCause()) {
 			case BLOCK_EXPLOSION:
 				flag = flags.getFlag("DamageBlockExplode");
+				break;
 			case CONTACT:
 				flag = flags.getFlag("DamageBlockContact");
+				break;
 			case DROWNING:
 				flag = flags.getFlag("DamageDrown");
+				break;
 			case FALL:
 				flag = flags.getFlag("DamageFall");
+				break;
 			case FIRE:
 				flag = flags.getFlag("DamageFire");
+				break;
 			case FIRE_TICK:
 				flag = flags.getFlag("DamageBurn");
+				break;
 			case LAVA:
 				flag = flags.getFlag("DamageLava");
+				break;
 			case LIGHTNING:
 				flag = flags.getFlag("DamageLightning");
+				break;
 			case MAGIC:
 				flag = flags.getFlag("DamageMagic");
+				break;
 			case MELTING:
 				flag = flags.getFlag("DamageMelting");
+				break;
 			case POISON:
 				flag = flags.getFlag("DamagePoison");
+				break;
 			case STARVATION:
 				flag = flags.getFlag("DamageStarve");
+				break;
 			case SUFFOCATION:
 				flag = flags.getFlag("DamageSuffocate");
+				break;
 			case SUICIDE:
 				flag = flags.getFlag("DamageSuicide");
+				break;
 			case VOID:
 				flag = flags.getFlag("DamageVoid");
+				break;
 			default:
 				if (Flags.checkAPI("1.4.5")
 						&& e.getCause() == DamageCause.FALLING_BLOCK) {
