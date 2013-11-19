@@ -41,11 +41,11 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import alshain01.Flags.Director;
 import alshain01.Flags.Flag;
 import alshain01.Flags.Flags;
 import alshain01.Flags.ModuleYML;
 import alshain01.Flags.Registrar;
+import alshain01.Flags.SystemType;
 import alshain01.Flags.area.Area;
 import alshain01.Flags.area.Siege;
 
@@ -161,7 +161,7 @@ public class FlagsDamage extends JavaPlugin {
 			} else if (damager instanceof Player
 					|| damager instanceof Projectile
 					&& ((Projectile) damager).getShooter() instanceof Player) {
-				if (!Director.inPvpCombat((Player) e.getEntity())) {
+				if (!SystemType.getActive().inPvpCombat((Player) e.getEntity())) {
 					// Don't interfere with a battle, you can't attack and then
 					// retreat to a protected area (that's cheating)
 					// Uses GP's timer (15 second default). Not supported by
