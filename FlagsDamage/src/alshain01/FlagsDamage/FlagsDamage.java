@@ -140,7 +140,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!Director.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!Area.getAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
@@ -166,7 +166,7 @@ public class FlagsDamage extends JavaPlugin {
 					// retreat to a protected area (that's cheating)
 					// Uses GP's timer (15 second default). Not supported by
 					// other systems.
-					final Area area = Director.getAreaAt(e.getEntity().getLocation());
+					final Area area = Area.getAt(e.getEntity().getLocation());
 					if (!(area instanceof Siege) || !((Siege) area).isUnderSiege()) {
 						// If your under siege, your on your own.
 						// That's part of the game.
@@ -181,7 +181,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!Director.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!Area.getAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
@@ -196,7 +196,7 @@ public class FlagsDamage extends JavaPlugin {
 				if (!(entity instanceof Player)) {
 					continue;
 				}
-				if (Director.getAreaAt(e.getEntity().getLocation()).getValue(
+				if (Area.getAt(e.getEntity().getLocation()).getValue(
 						flag, false)) {
 					// Essentially cancels it.
 					// Only way to cancel on a player by player basis instead of
