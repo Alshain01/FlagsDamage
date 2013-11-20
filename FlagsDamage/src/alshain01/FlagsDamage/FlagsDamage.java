@@ -24,6 +24,14 @@
 
 package alshain01.FlagsDamage;
 
+import io.github.alshain01.Flags.Flag;
+import io.github.alshain01.Flags.Flags;
+import io.github.alshain01.Flags.ModuleYML;
+import io.github.alshain01.Flags.Registrar;
+import io.github.alshain01.Flags.SystemType;
+import io.github.alshain01.Flags.area.Area;
+import io.github.alshain01.Flags.area.Siege;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -40,14 +48,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import alshain01.Flags.Flag;
-import alshain01.Flags.Flags;
-import alshain01.Flags.ModuleYML;
-import alshain01.Flags.Registrar;
-import alshain01.Flags.SystemType;
-import alshain01.Flags.area.Area;
-import alshain01.Flags.area.Siege;
 
 /**
  * Flags - Damage Module that adds damage flags to the plug-in Flags.
