@@ -36,7 +36,7 @@ Flag:
     Description: Toggles damage caused in retaliation to another attack by the Thorns enchantment.
     MinimumAPI: 1.5.2
   DamageVoid:
-        Description: Toggles damage caused by falling into the void.
+    Description: Toggles damage caused by falling into the void.
   DamageWither:
     Description: Toggles damage caused by Wither potion effect.
     MinimumAPI: 1.4.5

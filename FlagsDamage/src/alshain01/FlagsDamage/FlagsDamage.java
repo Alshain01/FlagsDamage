@@ -33,7 +33,6 @@ import io.github.alshain01.Flags.area.Area;
 import io.github.alshain01.Flags.area.Siege;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
@@ -55,10 +54,30 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Alshain01
  */
 public class FlagsDamage extends JavaPlugin {
+	/**
+	 * Called when this module is enabled
+	 */
+	@Override
+	public void onEnable() {
+		final PluginManager pm = Bukkit.getServer().getPluginManager();
+
+		if (!pm.isPluginEnabled("Flags")) {
+			getLogger().severe("Flags was not found. Shutting down.");
+			pm.disablePlugin(this);
+		}
+
+		// Connect to the data file and register the flags
+		Flags.getRegistrar().register(new ModuleYML(this, "flags.yml"), "Damage");
+
+		// Load plug-in events and data
+		Bukkit.getServer().getPluginManager()
+				.registerEvents(new EntityDamageListener(), this);
+	}
+
 	/*
 	 * The event handler for the flags we created earlier
 	 */
-	public class EntityDamageListener implements Listener {
+	private class EntityDamageListener implements Listener {
 		@EventHandler(ignoreCancelled = true)
 		private void onEntityDamage(EntityDamageEvent e) {
 			// If the damage is not a to a player, we do nothing.
@@ -205,48 +224,5 @@ public class FlagsDamage extends JavaPlugin {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Called when this module is enabled
-	 */
-	@Override
-	public void onEnable() {
-		final PluginManager pm = Bukkit.getServer().getPluginManager();
-
-		if (!pm.isPluginEnabled("Flags")) {
-			getLogger().severe("Flags was not found. Shutting down.");
-			pm.disablePlugin(this);
-		}
-
-		// Connect to the data file
-		final ModuleYML dataFile = new ModuleYML(this, "flags.yml");
-
-		// Register with Flags
-		final Registrar flags = Flags.getRegistrar();
-		for (final String f : dataFile.getModuleData().getConfigurationSection("Flag").getKeys(false)) {
-			final ConfigurationSection data = dataFile.getModuleData().getConfigurationSection("Flag." + f);
-
-			// We don't want to register flags that aren't supported.
-			// It would just muck up the help menu.
-			// Null value is assumed to support all versions.
-			final String api = data.getString("MinimumAPI");
-			if (api != null && !Flags.checkAPI(api)) {
-				continue;
-			}
-
-			// The description that appears when using help commands.
-			final String desc = data.getString("Description");
-
-			// Register it! (All flags are defaulting to true in this module)
-			// Be sure to send a plug-in name or group description for the help
-			// command!
-			// It can be this.getName() or another string.
-			flags.register(f, desc, true, "Damage");
-		}
-
-		// Load plug-in events and data
-		Bukkit.getServer().getPluginManager()
-				.registerEvents(new EntityDamageListener(), this);
 	}
 }
