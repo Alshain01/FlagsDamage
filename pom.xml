@@ -5,7 +5,13 @@
 	<version>1.0.3</version>
 	<name>FlagsDamage</name>
 	<description>Module that adds damage flags to the Flags plugin.</description>
-	<url>http://dev.bukkit.org/bukkit-plugins/flags/</url> 
+	<url>http://dev.bukkit.org/bukkit-plugins/flags/</url>
+
+    <properties>
+        <project.author>Alshain01</project.author>
+        <project.main>io.github.alshain01.FlagsDamage.FlagsDamage</project.main>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 	<repositories>
 		<repository>
@@ -28,10 +34,6 @@
 		<url>https://github.com/Alshain01/FlagsDamage</url>
 		<tag>master</tag>
 	</scm>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<build>
 		<defaultGoal>clean package install</defaultGoal>
