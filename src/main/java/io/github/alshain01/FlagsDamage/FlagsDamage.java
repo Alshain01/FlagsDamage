@@ -52,7 +52,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 
  * @author Alshain01
  */
-public class FlagsDamage extends JavaPlugin {
+class FlagsDamage extends JavaPlugin {
 	/**
 	 * Called when this module is enabled
 	 */
@@ -92,7 +92,7 @@ public class FlagsDamage extends JavaPlugin {
 				return;
 			}
 
-			Flag flag = null;
+			Flag flag;
 			final Registrar flags = Flags.getRegistrar();
 
 			switch (e.getCause()) {
@@ -211,15 +211,13 @@ public class FlagsDamage extends JavaPlugin {
 			}
 
 			for (final LivingEntity entity : e.getAffectedEntities()) {
-				if (!(entity instanceof Player)) {
-					continue;
-				}
-				if (Area.getAt(e.getEntity().getLocation()).getValue(
-						flag, false)) {
-					// Essentially cancels it.
-					// Only way to cancel on a player by player basis instead of
-					// the whole effect.
-					e.setIntensity(entity, 0);
+				if (entity instanceof Player) {
+    				if (!Area.getAt(e.getEntity().getLocation()).getValue(flag, false)) {
+                        // Essentially cancels it.
+                        // Only way to cancel on a player by player basis instead of
+                        // the whole effect.
+                        e.setIntensity(entity, 0);
+                    }
 				}
 			}
 		}
