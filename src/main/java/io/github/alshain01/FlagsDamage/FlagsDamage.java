@@ -23,11 +23,8 @@
  */
 package io.github.alshain01.FlagsDamage;
 
-import io.github.alshain01.Flags.Flag;
-import io.github.alshain01.Flags.Flags;
-import io.github.alshain01.Flags.ModuleYML;
-import io.github.alshain01.Flags.Registrar;
-import io.github.alshain01.Flags.SystemType;
+import io.github.alshain01.Flags.*;
+import io.github.alshain01.Flags.System;
 import io.github.alshain01.Flags.area.Area;
 import io.github.alshain01.Flags.area.Siege;
 
@@ -52,7 +49,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 
  * @author Alshain01
  */
-class FlagsDamage extends JavaPlugin {
+public class FlagsDamage extends JavaPlugin {
 	/**
 	 * Called when this module is enabled
 	 */
@@ -158,7 +155,7 @@ class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!Area.getAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!System.getActive().getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
@@ -179,12 +176,12 @@ class FlagsDamage extends JavaPlugin {
 			} else if (damager instanceof Player
 					|| damager instanceof Projectile
 					&& ((Projectile) damager).getShooter() instanceof Player) {
-				if (!SystemType.getActive().inPvpCombat((Player) e.getEntity())) {
+				if (!System.getActive().inPvpCombat((Player) e.getEntity())) {
 					// Don't interfere with a battle, you can't attack and then
 					// retreat to a protected area (that's cheating)
-					// Uses GP's timer (15 second default). Not supported by
+					// Uses GriefPrevention's timer (15 second default). Not supported by
 					// other systems.
-					final Area area = Area.getAt(e.getEntity().getLocation());
+					final Area area = System.getActive().getAreaAt(e.getEntity().getLocation());
 					if (!(area instanceof Siege) || !((Siege) area).isUnderSiege()) {
 						// If your under siege, your on your own.
 						// That's part of the game.
@@ -199,7 +196,7 @@ class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!Area.getAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!System.getActive().getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
@@ -212,7 +209,7 @@ class FlagsDamage extends JavaPlugin {
 
 			for (final LivingEntity entity : e.getAffectedEntities()) {
 				if (entity instanceof Player) {
-    				if (!Area.getAt(e.getEntity().getLocation()).getValue(flag, false)) {
+    				if (!System.getActive().getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
                         // Essentially cancels it.
                         // Only way to cancel on a player by player basis instead of
                         // the whole effect.
