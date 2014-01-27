@@ -23,10 +23,10 @@
  */
 package io.github.alshain01.FlagsDamage;
 
-import io.github.alshain01.Flags.*;
-import io.github.alshain01.Flags.System;
-import io.github.alshain01.Flags.area.Area;
-import io.github.alshain01.Flags.area.Siege;
+import io.github.alshain01.flags.*;
+import io.github.alshain01.flags.System;
+import io.github.alshain01.flags.area.Area;
+import io.github.alshain01.flags.area.Siege;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
