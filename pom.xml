@@ -22,7 +22,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>io.github.alshain01</groupId>
+			<groupId>io.github.alshain01.flags</groupId>
 			<artifactId>Flags</artifactId>
 			<version>LATEST</version>
 		</dependency>
