@@ -44,6 +44,10 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Flags - Damage Module that adds damage flags to the plug-in Flags.
  * 
@@ -63,17 +67,27 @@ public class FlagsDamage extends JavaPlugin {
 		}
 
 		// Connect to the data file and register the flags
-		Flags.getRegistrar().register(new ModuleYML(this, "flags.yml"), "Damage");
+        Set<Flag> flags = Flags.getRegistrar().register(new ModuleYML(this, "flags.yml"), "Damage");
+        Map<String, Flag> flagMap = new HashMap<String, Flag>();
+        for(Flag f : flags) {
+            flagMap.put(f.getName(), f);
+        }
 
 		// Load plug-in events and data
-		Bukkit.getServer().getPluginManager()
-				.registerEvents(new EntityDamageListener(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new EntityDamageListener(flagMap), this);
 	}
 
 	/*
 	 * The event handler for the flags we created earlier
 	 */
 	private class EntityDamageListener implements Listener {
+        final System system = System.getActive();
+        final Map<String, Flag> flags;
+
+        private EntityDamageListener (Map<String, Flag> flags) {
+            this.flags = flags;
+        }
+
 		@EventHandler(ignoreCancelled = true)
 		private void onEntityDamage(EntityDamageEvent e) {
 			// If the damage is not a to a player, we do nothing.
@@ -90,126 +104,120 @@ public class FlagsDamage extends JavaPlugin {
 			}
 
 			Flag flag;
-			final Registrar flags = Flags.getRegistrar();
 
 			switch (e.getCause()) {
 			case BLOCK_EXPLOSION:
-				flag = flags.getFlag("DamageBlockExplode");
+				flag = flags.get("DamageBlockExplode");
 				break;
 			case CONTACT:
-				flag = flags.getFlag("DamageBlockContact");
+				flag = flags.get("DamageBlockContact");
 				break;
 			case DROWNING:
-				flag = flags.getFlag("DamageDrown");
+				flag = flags.get("DamageDrown");
 				break;
 			case FALL:
-				flag = flags.getFlag("DamageFall");
+				flag = flags.get("DamageFall");
 				break;
 			case FIRE:
-				flag = flags.getFlag("DamageFire");
+				flag = flags.get("DamageFire");
 				break;
 			case FIRE_TICK:
-				flag = flags.getFlag("DamageBurn");
+				flag = flags.get("DamageBurn");
 				break;
 			case LAVA:
-				flag = flags.getFlag("DamageLava");
+				flag = flags.get("DamageLava");
 				break;
 			case LIGHTNING:
-				flag = flags.getFlag("DamageLightning");
+				flag = flags.get("DamageLightning");
 				break;
 			case MAGIC:
-				flag = flags.getFlag("DamageMagic");
+				flag = flags.get("DamageMagic");
 				break;
 			case MELTING:
-				flag = flags.getFlag("DamageMelting");
+				flag = flags.get("DamageMelting");
 				break;
 			case POISON:
-				flag = flags.getFlag("DamagePoison");
+				flag = flags.get("DamagePoison");
 				break;
 			case STARVATION:
-				flag = flags.getFlag("DamageStarve");
+				flag = flags.get("DamageStarve");
 				break;
 			case SUFFOCATION:
-				flag = flags.getFlag("DamageSuffocate");
+				flag = flags.get("DamageSuffocate");
 				break;
 			case SUICIDE:
-				flag = flags.getFlag("DamageSuicide");
+				flag = flags.get("DamageSuicide");
 				break;
 			case VOID:
-				flag = flags.getFlag("DamageVoid");
+				flag = flags.get("DamageVoid");
 				break;
 			default:
 				if (Flags.checkAPI("1.4.5")
 						&& e.getCause() == DamageCause.FALLING_BLOCK) {
-					flag = flags.getFlag("DamageBlockFall");
+					flag = flags.get("DamageBlockFall");
 				} else if (Flags.checkAPI("1.4.5")
 						&& e.getCause() == DamageCause.WITHER) {
-					flag = flags.getFlag("DamageWither");
+					flag = flags.get("DamageWither");
 				} else if (Flags.checkAPI("1.5.2")
 						&& e.getCause() == DamageCause.THORNS) {
-					flag = flags.getFlag("DamageThorns");
+					flag = flags.get("DamageThorns");
 				} else {
-					flag = flags.getFlag("DamageOther");
+					flag = flags.get("DamageOther");
 				}
 			}
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!System.getActive().getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!system.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
 		@EventHandler(ignoreCancelled = true)
 		private void onEntityDamagedByEntity(EntityDamageByEntityEvent e) {
 			// If the damage is not a to a player, we do nothing.
-			if (!(e.getEntity() instanceof Player)) {
-				return;
-			}
+			if (!(e.getEntity() instanceof Player)) { return; }
 
 			Flag flag = null;
-			final Registrar flags = Flags.getRegistrar();
-
 			final Entity damager = e.getDamager();
-			if (damager instanceof Monster || damager instanceof Projectile
-					&& ((Projectile) damager).getShooter() instanceof Monster) {
-				flag = flags.getFlag("DamageMonster");
+			if (damager instanceof Monster
+                    || damager instanceof Projectile
+					   && ((Projectile) damager).getShooter() instanceof Monster) {
+				flag = flags.get("DamageMonster");
 			} else if (damager instanceof Player
 					|| damager instanceof Projectile
-					&& ((Projectile) damager).getShooter() instanceof Player) {
-				if (!System.getActive().inPvpCombat((Player) e.getEntity())) {
+					   && ((Projectile) damager).getShooter() instanceof Player) {
+				if (!system.inPvpCombat((Player) e.getEntity())) {
 					// Don't interfere with a battle, you can't attack and then
 					// retreat to a protected area (that's cheating)
 					// Uses GriefPrevention's timer (15 second default). Not supported by
 					// other systems.
-					final Area area = System.getActive().getAreaAt(e.getEntity().getLocation());
+					final Area area = system.getAreaAt(e.getEntity().getLocation());
 					if (!(area instanceof Siege) || !((Siege) area).isUnderSiege()) {
 						// If your under siege, your on your own.
 						// That's part of the game.
 						// Only supported by GP.
-						flag = flags.getFlag("Pvp");
+						flag = flags.get("Pvp");
 					}
 				}
 			} else {
 				// Not really sure how you got here, but if you did...
-				flag = flags.getFlag("DamageOther");
+				flag = flags.get("DamageOther");
 			}
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!System.getActive().getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!system.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
 		@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 		private void onPotionSplash(PotionSplashEvent e) {
 			final Flag flag = Flags.getRegistrar().getFlag("PotionSplash");
-			if (flag == null) {
-				return;
-			}
+			if (flag == null) {	return;	}
 
 			for (final LivingEntity entity : e.getAffectedEntities()) {
 				if (entity instanceof Player) {
-    				if (!System.getActive().getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
+    				if (!system.getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
                         // Essentially cancels it.
                         // Only way to cancel on a player by player basis instead of
                         // the whole effect.
