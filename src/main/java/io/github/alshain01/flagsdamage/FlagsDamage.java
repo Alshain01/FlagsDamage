@@ -21,7 +21,7 @@
  Notice: For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do this is with a link to this web page.
  http://creativecommons.org/licenses/by-nc/3.0/
  */
-package io.github.alshain01.FlagsDamage;
+package io.github.alshain01.flagsdamage;
 
 import io.github.alshain01.flags.*;
 import io.github.alshain01.flags.System;
@@ -49,9 +49,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Flags - Damage Module that adds damage flags to the plug-in Flags.
- * 
- * @author Alshain01
+ * Flags Damage - Module that adds damage flags to the plug-in Flags.
  */
 public class FlagsDamage extends JavaPlugin {
 	/**
