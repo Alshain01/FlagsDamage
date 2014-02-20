@@ -9,7 +9,6 @@ Flag:
     Description: Toggles damage caused when an player falls a distance greater than 3 blocks.
   DamageBlockFall:
     Description: Toggles damage caused by being hit by a falling block.
-    MinimumAPI: 1.4.5
   DamageFire:
     Description: Toggles damage caused by direct exposure to fire.
   DamageBurn:
@@ -34,12 +33,10 @@ Flag:
     Description: Toggles damage by committing suicide using the command /kill
   DamageThorns:
     Description: Toggles damage caused in retaliation to another attack by the Thorns enchantment.
-    MinimumAPI: 1.5.2
   DamageVoid:
     Description: Toggles damage caused by falling into the void.
   DamageWither:
     Description: Toggles damage caused by Wither potion effect.
-    MinimumAPI: 1.4.5
   DamageOther:
     Description: Toggles damage caused by anything not handled by other flags.
   Pvp:

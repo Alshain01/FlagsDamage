@@ -116,6 +116,9 @@ public class FlagsDamage extends JavaPlugin {
 			case FALL:
 				flag = flags.get("DamageFall");
 				break;
+            case FALLING_BLOCK:
+                flag = flags.get("DamageBlockFall");
+                break;
 			case FIRE:
 				flag = flags.get("DamageFire");
 				break;
@@ -146,22 +149,17 @@ public class FlagsDamage extends JavaPlugin {
 			case SUICIDE:
 				flag = flags.get("DamageSuicide");
 				break;
+            case THORNS:
+                flag = flags.get("DamageThorns");
+                break;
+            case WITHER:
+                flag = flags.get("DamageWither");
+                break;
 			case VOID:
 				flag = flags.get("DamageVoid");
 				break;
 			default:
-				if (Flags.checkAPI("1.4.5")
-						&& e.getCause() == DamageCause.FALLING_BLOCK) {
-					flag = flags.get("DamageBlockFall");
-				} else if (Flags.checkAPI("1.4.5")
-						&& e.getCause() == DamageCause.WITHER) {
-					flag = flags.get("DamageWither");
-				} else if (Flags.checkAPI("1.5.2")
-						&& e.getCause() == DamageCause.THORNS) {
-					flag = flags.get("DamageThorns");
-				} else {
-					flag = flags.get("DamageOther");
-				}
+                flag = flags.get("DamageOther");
 			}
 
 			// Always guard this, even when it really can't happen.
