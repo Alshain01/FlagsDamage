@@ -23,7 +23,6 @@ Flag:
     Description: Toggles damage caused due to a snowman melting.
   DamageMonster:
     Description: Toggles damage caused by monsters.
-    MinimumAPI: 1.7.2
   DamagePoison:
     Description: Toggles damage caused due to an ongoing poison effect.
   DamageStarve:
@@ -42,6 +41,5 @@ Flag:
     Description: Toggles damage caused by anything not handled by other flags.
   Pvp:
     Description: Toggles Pvp if the server has Pvp enabled.
-    MinimumAPI: 1.7.2
   PotionSplash:
     Description: Toggles disabling potion splash intensity.

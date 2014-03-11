@@ -175,7 +175,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			Flag flag = null;
 			final Entity damager = e.getDamager();
-			if (Flags.checkAPI("1.7.2") && damager instanceof Monster
+			if (damager instanceof Monster
                     || damager instanceof Projectile && ((Projectile) damager).getShooter() instanceof Monster) {
 				flag = flags.get("DamageMonster");
 			} else if (damager instanceof Player
