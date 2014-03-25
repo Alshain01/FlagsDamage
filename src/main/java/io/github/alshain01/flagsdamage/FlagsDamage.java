@@ -23,8 +23,10 @@
  */
 package io.github.alshain01.flagsdamage;
 
-import io.github.alshain01.flags.*;
-import io.github.alshain01.flags.System;
+import io.github.alshain01.flags.Flags;
+import io.github.alshain01.flags.Flag;
+import io.github.alshain01.flags.ModuleYML;
+import io.github.alshain01.flags.CuboidType;
 import io.github.alshain01.flags.area.Area;
 import io.github.alshain01.flags.area.Siege;
 
@@ -51,6 +53,7 @@ import java.util.Set;
 /**
  * Flags Damage - Module that adds damage flags to the plug-in Flags.
  */
+@SuppressWarnings("unused")
 public class FlagsDamage extends JavaPlugin {
 	/**
 	 * Called when this module is enabled
@@ -79,7 +82,7 @@ public class FlagsDamage extends JavaPlugin {
 	 * The event handler for the flags we created earlier
 	 */
 	private class EntityDamageListener implements Listener {
-        final System system = System.getActive();
+        final CuboidType system = CuboidType.getActive();
         final Map<String, Flag> flags;
 
         private EntityDamageListener (Map<String, Flag> flags) {
