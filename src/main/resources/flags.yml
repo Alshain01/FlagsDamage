@@ -1,44 +1,44 @@
 Flag:
   DamageBlockExplode:
-    Description: Toggles damage caused by being in the area when a block explodes.
+    Description: Toggles block explosion damage.
   DamageContact:
-    Description: Toggles damage caused when a player contacts a block such as a cactus.
+    Description: Toggles contact damage such as coming in contact with a cactus.
   DamageDrown:
-    Description: Toggles damage caused by running out of air while in water.
+    Description: Toggles damage from lack of air.
   DamageFall:
-    Description: Toggles damage caused when an player falls a distance greater than 3 blocks.
+    Description: Toggles damage from falling greater than 3 blocks.
   DamageBlockFall:
-    Description: Toggles damage caused by being hit by a falling block.
+    Description: Toggles damage from being hit by a falling block.
   DamageFire:
-    Description: Toggles damage caused by direct exposure to fire.
+    Description: Toggles damage from exposure to fire.
   DamageBurn:
-    Description: Toggles damage caused due to burns caused by fire.
+    Description: Toggles damage from being on fire.
   DamageLava:
-    Description: Toggles damage caused by direct exposure to lava.
+    Description: Toggles damage from exposure to lava.
   DamageLightning:
-    Description: Toggles damage caused by being struck by lightning.
+    Description: Toggles damage from being struck by lightning.
   DamageMagic:
-    Description: Toggles damage caused by being hit by a damage potion or spell.
+    Description: Toggles damage from potions or spells.
   DamageMelting:
-    Description: Toggles damage caused due to a snowman melting.
+    Description: Toggles damage from a snowman melting.
   DamageMonster:
-    Description: Toggles damage caused by monsters.
+    Description: Toggles damage from monsters.
   DamagePoison:
-    Description: Toggles damage caused due to an ongoing poison effect.
+    Description: Toggles damage from ongoing poison effects.
   DamageStarve:
-    Description: Toggles damage caused by starving due to having an empty hunger bar.
+    Description: Toggles damage from starving due to having an empty hunger bar.
   DamageSuffocate:
-    Description: Toggles damage caused by being put in a block.
+    Description: Toggles damage from by being put in a block.
   DamageSuicide:
-    Description: Toggles damage by committing suicide using the command /kill
+    Description: Toggles damage from committing suicide using the command /kill
   DamageThorns:
     Description: Toggles damage caused in retaliation to another attack by the Thorns enchantment.
   DamageVoid:
-    Description: Toggles damage caused by falling into the void.
+    Description: Toggles damage from falling into the void.
   DamageWither:
-    Description: Toggles damage caused by Wither potion effect.
+    Description: Toggles damage from the Wither effect.
   DamageOther:
-    Description: Toggles damage caused by anything not handled by other flags.
+    Description: Toggles damage from anything not handled by other flags.
   Pvp:
     Description: Toggles Pvp if the server has Pvp enabled.
   PotionSplash:
