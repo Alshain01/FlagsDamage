@@ -23,14 +23,13 @@
  */
 package io.github.alshain01.flagsdamage;
 
-import io.github.alshain01.flags.Flags;
-import io.github.alshain01.flags.Flag;
-import io.github.alshain01.flags.ModuleYML;
-import io.github.alshain01.flags.CuboidType;
-import io.github.alshain01.flags.area.Area;
-import io.github.alshain01.flags.area.Siege;
+import io.github.alshain01.flags.api.Flag;
+import io.github.alshain01.flags.api.FlagsAPI;
+import io.github.alshain01.flags.api.area.Area;
+import io.github.alshain01.flags.api.area.Siegeable;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
@@ -65,10 +64,12 @@ public class FlagsDamage extends JavaPlugin {
 		if (!pm.isPluginEnabled("Flags")) {
 			getLogger().severe("Flags was not found. Shutting down.");
 			pm.disablePlugin(this);
+            return;
 		}
 
 		// Connect to the data file and register the flags
-        Set<Flag> flags = Flags.getRegistrar().register(new ModuleYML(this, "flags.yml"), "Damage");
+        YamlConfiguration flagConfig = YamlConfiguration.loadConfiguration(getResource("flags.yml"));
+        Set<Flag> flags = FlagsAPI.getRegistrar().register(flagConfig, "Damage");
         Map<String, Flag> flagMap = new HashMap<String, Flag>();
         for(Flag f : flags) {
             flagMap.put(f.getName(), f);
@@ -82,7 +83,6 @@ public class FlagsDamage extends JavaPlugin {
 	 * The event handler for the flags we created earlier
 	 */
 	private class EntityDamageListener implements Listener {
-        final CuboidType system = CuboidType.getActive();
         final Map<String, Flag> flags;
 
         private EntityDamageListener (Map<String, Flag> flags) {
@@ -167,7 +167,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!system.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
@@ -184,13 +184,13 @@ public class FlagsDamage extends JavaPlugin {
 			} else if (damager instanceof Player
 					|| damager instanceof Projectile
 					   && ((Projectile) damager).getShooter() instanceof Player) {
-				if (!system.inPvpCombat((Player) e.getEntity())) {
+				if (!FlagsAPI.inPvpCombat((Player) e.getEntity())) {
 					// Don't interfere with a battle, you can't attack and then
 					// retreat to a protected area (that's cheating)
 					// Uses GriefPrevention's timer (15 second default). Not supported by
 					// other systems.
-					final Area area = system.getAreaAt(e.getEntity().getLocation());
-					if (!(area instanceof Siege) || !((Siege) area).isUnderSiege()) {
+					final Area area = FlagsAPI.getAreaAt(e.getEntity().getLocation());
+					if (!(area instanceof Siegeable) || !((Siegeable) area).isUnderSiege()) {
 						// If your under siege, your on your own.
 						// That's part of the game.
 						// Only supported by GP.
@@ -204,18 +204,18 @@ public class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!system.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
 			}
 		}
 
 		@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 		private void onPotionSplash(PotionSplashEvent e) {
-			final Flag flag = Flags.getRegistrar().getFlag("PotionSplash");
+			final Flag flag = FlagsAPI.getRegistrar().getFlag("PotionSplash");
 			if (flag == null) {	return;	}
 
 			for (final LivingEntity entity : e.getAffectedEntities()) {
 				if (entity instanceof Player) {
-    				if (!system.getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
+    				if (!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
                         // Essentially cancels it.
                         // Only way to cancel on a player by player basis instead of
                         // the whole effect.
