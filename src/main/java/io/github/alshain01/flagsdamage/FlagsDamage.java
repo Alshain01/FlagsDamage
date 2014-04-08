@@ -167,7 +167,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getState(flag, false));
 			}
 		}
 
@@ -204,7 +204,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			// Always guard this, even when it really can't happen.
 			if (flag != null) { 
-				e.setCancelled(!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getValue(flag, false));
+				e.setCancelled(!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getState(flag, false));
 			}
 		}
 
@@ -215,7 +215,7 @@ public class FlagsDamage extends JavaPlugin {
 
 			for (final LivingEntity entity : e.getAffectedEntities()) {
 				if (entity instanceof Player) {
-    				if (!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getValue(flag, false)) {
+    				if (!FlagsAPI.getAreaAt(e.getEntity().getLocation()).getState(flag, false)) {
                         // Essentially cancels it.
                         // Only way to cancel on a player by player basis instead of
                         // the whole effect.
